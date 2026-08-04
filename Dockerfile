@@ -1,5 +1,9 @@
 FROM python:3.11-slim
 
+# Define o diretório de trabalho primeiro
+WORKDIR /app
+
+# Instala dependências do sistema
 RUN apt-get update && apt-get install -y \
     wget \
     gnupg \
@@ -15,9 +19,13 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --d
     && apt-get install -y google-chrome-stable \
     && rm -rf /var/lib/apt/lists/*
 
+# Copia o requirements.txt primeiro (para aproveitar cache)
+COPY requirements.txt .
+
+# Instala as dependências Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-WORKDIR /app
+# Copia o resto do código
 COPY . .
 
 EXPOSE 8501
