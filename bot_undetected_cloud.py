@@ -47,16 +47,10 @@ class TikTokBot:
         options.add_argument('--disable-gpu')
         options.add_argument('--disable-setuid-sandbox')
         options.add_argument('--disable-blink-features=AutomationControlled')
-        
-        # Headless mode para servidor
         options.add_argument('--headless=new')
-        
-        # User agent realista
         options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
         
-        # Cria o driver
         driver = uc.Chrome(options=options, version_main=150)
-        
         return driver
     
     def assistir_video(self, url, driver):
@@ -65,11 +59,9 @@ class TikTokBot:
             driver.get(url)
             time.sleep(5)
             
-            # Rola a página
             driver.execute_script("window.scrollBy(0, 300)")
             time.sleep(2)
             
-            # Tenta dar play no vídeo
             try:
                 video = driver.find_element(By.TAG_NAME, "video")
                 driver.execute_script("arguments[0].play();", video)
@@ -81,11 +73,9 @@ class TikTokBot:
                 except:
                     pass
             
-            # Assistir por um tempo
             duracao = random.uniform(30, 60)
             self.log(f"⏳ Assistindo por {duracao:.0f} segundos...")
             
-            # Simula comportamento humano durante a visualização
             intervalos = int(duracao / 10)
             for _ in range(intervalos):
                 time.sleep(10)
@@ -94,7 +84,6 @@ class TikTokBot:
             
             time.sleep(random.uniform(2, 5))
             
-            # Tenta curtir
             if random.random() > 0.4:
                 try:
                     like_selectors = [
@@ -117,7 +106,6 @@ class TikTokBot:
                 except:
                     self.log("⚠️ Não foi possível curtir")
             
-            # Scroll final
             driver.execute_script("window.scrollBy(0, 200)")
             time.sleep(random.uniform(1, 3))
             
