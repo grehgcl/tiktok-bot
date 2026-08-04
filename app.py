@@ -7,7 +7,7 @@ import time
 import json
 import os
 
-from bot_playwright import TikTokBot, get_bot
+from bot_cloud import TikTokBot, get_bot
 st.set_page_config(
     page_title="TikTok Bot - Engagement Automatico",
     page_icon="🤖",
