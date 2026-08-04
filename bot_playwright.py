@@ -3,6 +3,8 @@ import random
 import os
 from datetime import datetime
 from playwright.sync_api import sync_playwright
+from bot_undetected_cloud import TikTokBot, get_bot
+
 
 class TikTokBot:
     def __init__(self):
