@@ -49,9 +49,20 @@ class TikTokBot:
                     self.log(f"\n📱 Visualização {i+1}/{num_views}")
                     
                     try:
+                        # Modo headless com argumentos para servidor
                         browser = p.chromium.launch(
-                            headless=False,
-                            args=['--disable-blink-features=AutomationControlled']
+                            headless=True,
+                            args=[
+                                '--disable-blink-features=AutomationControlled',
+                                '--no-sandbox',
+                                '--disable-dev-shm-usage',
+                                '--disable-gpu',
+                                '--disable-setuid-sandbox',
+                                '--no-first-run',
+                                '--no-zygote',
+                                '--single-process',
+                                '--disable-logging'
+                            ]
                         )
                         context = browser.new_context(
                             viewport={'width': random.choice([1920, 1366, 1536]), 'height': 1080},
@@ -60,7 +71,7 @@ class TikTokBot:
                         page = context.new_page()
                         
                         self.log(f"🌐 Acessando: {url}")
-                        page.goto(url, timeout=30000)
+                        page.goto(url, timeout=60000)
                         time.sleep(5)
                         
                         page.evaluate("window.scrollBy(0, 300)")
